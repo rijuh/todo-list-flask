@@ -42,8 +42,9 @@
             <td>{{todo.title}}</td>
             <td>{{todo.desc}}</td>
             <td>
-              <a class="btn btn-outline-dark" href="/update/{{todo.id}}" role="button">Update</a>
-              <a class="btn btn-outline-dark" href="/delete/{{todo.id}}" role="button">Delete</a>
+              <a class="btn btn-outline-success" href="/complete/{{todo.id}}" role="button" {% if todo.status=='complete' %}hidden{% endif %}>Complete</a>
+              <a class="btn btn-outline-info" href="/update/{{todo.id}}" role="button" {% if todo.status=='complete' %}hidden{% endif %}>Update</a>
+              <a class="btn btn-outline-danger" href="/delete/{{todo.id}}" role="button">Delete</a>
             </td>
           </tr>
         {% endfor %}

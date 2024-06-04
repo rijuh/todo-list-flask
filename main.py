@@ -10,12 +10,22 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(40), nullable=False)
     desc = db.Column(db.String(100), nullable=False)
+    status = db.Column(db.String(10), nullable=True)
 
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    todos = Todo.query.all()
+    todos = Todo.query.order_by(Todo.status).all()
     return render_template('index.html', todos=todos)
+
+
+@app.route("/complete/<int:id>")
+def complete(id):
+    todo = Todo.query.filter_by(id=id).first()
+    todo.status = 'complete'
+    db.session.add(todo)
+    db.session.commit()
+    return redirect('/')
 
 
 @app.route("/add", methods=['GET', 'POST'])
